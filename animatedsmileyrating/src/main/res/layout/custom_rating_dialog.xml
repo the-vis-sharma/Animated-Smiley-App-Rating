@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/rating_dialog_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:tint="@android:color/holo_orange_light"
+                        app:srcCompat="@drawable/ic_star_black_24dp"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:tint="@android:color/holo_orange_light"
+                        app:srcCompat="@drawable/ic_star_black_24dp"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:tint="@android:color/holo_orange_light"
+                        app:srcCompat="@drawable/ic_star_black_24dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Are you enjoying this app?"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please share your experince with us about this app so that we can serve you better."
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <com.hsalf.smilerating.SmileRating
+                android:id="@+id/smiley_rating_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_never"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/smiley_rating_bar"
+                android:text="No Thanks"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="true"
+                android:layout_toLeftOf="@id/tv_later"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/smiley_rating_bar"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:text="Submit"
+                android:clickable="true"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_later"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/smiley_rating_bar"
+                android:text="later"
+                android:textColor="@color/colorPrimary"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@id/tv_submit"
+                android:layout_margin="16dp"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
