@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,14 +58,21 @@ public class AnimatedSmileyRating {
             @Override
             public void onClick(View v) {
                 int rating = smileyRatingBar.getSelectedSmile();
-                if(rating >= threshold) {
-                    openPlayStore(context);
+                if(rating>0) {
+                    if (rating >= threshold) {
+                        openPlayStore(context);
+                    } else {
+                        openFeedbackMail(context);
+                    }
+
+                    showNever();
+                    dialog.dismiss();
                 }
                 else {
-                    openFeedbackMail(context);
+                    Animation shake = AnimationUtils.loadAnimation(context, R.anim.shake);
+                    ratingDialogCard.startAnimation(shake);
+                    Toast.makeText(context, "Select a rating.", Toast.LENGTH_LONG).show();
                 }
-                showNever();
-                dialog.dismiss();
             }
         });
 
