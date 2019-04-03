@@ -12,9 +12,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AnimatedSmileyRating smileyRating = new AnimatedSmileyRating(this);
-        smileyRating.setSession(3);
+        AnimatedSmileyRating smileyRating = new AnimatedSmileyRating(this, 5, "cs.techbuddy@gmail.com");
+        smileyRating.setInitialSession(3);
         smileyRating.setThreshold(3);
+        smileyRating.setFeedbackEmailSubject("Recovery Bin - Feedback");
         smileyRating.show();
 
     }

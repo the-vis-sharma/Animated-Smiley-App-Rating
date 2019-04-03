@@ -33,14 +33,22 @@ public class AnimatedSmileyRating {
     private TextView tvSubmit;
     private SmileRating smileyRatingBar;
     private SharedPreferences sharedpreferences;
-    private String MyPrefs = "AnimatedSmileyRating";
+    private String MyPrefs = "AnimatedSmileyAppRating";
     private static final String SESSION_COUNT = "session_count";
     private static final String SHOW_NEVER = "show_never";
+    private static final String SHOW_LATER = "show_later";
+    private int initialSession = 1;
     private int session = 1;
     private float threshold = 1;
+    private String feedbackToEmailId;
+    private String feedbackEmailSubject = "Feedback via Animated Smiley App Rating";
+    private String feedbackPlaceholderText = "Write your feedback/issue here...";
 
-    public AnimatedSmileyRating(final Context context) {
+    public AnimatedSmileyRating(final Context context, int session, String feedbackToEmailId) {
         this.context = context;
+        this.initialSession = session;
+        this.session = session;
+        this.feedbackToEmailId = feedbackToEmailId;
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_rating_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -96,9 +104,9 @@ public class AnimatedSmileyRating {
     public void openFeedbackMail(Context context) {
         final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/html");
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "cs.techbuddy@gmail.com" });
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Recovery Bin - Feedback");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, "Write your feedback/issue here");
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ feedbackToEmailId });
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, feedbackEmailSubject);
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, feedbackPlaceholderText);
         context.startActivity(Intent.createChooser(intent, "Choose Email App -"));
     }
 
@@ -122,6 +130,7 @@ public class AnimatedSmileyRating {
         sharedpreferences = context.getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putInt(SESSION_COUNT, 2);
+        editor.putBoolean(SHOW_LATER, true);
         editor.commit();
     }
 
@@ -133,9 +142,19 @@ public class AnimatedSmileyRating {
     }
 
     public void show() {
-        if(checkIfSessionMatches(session)) {
-            dialog.show();
+        sharedpreferences = context.getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
+
+        if(sharedpreferences.getBoolean(SHOW_LATER, false)) {
+            if (checkIfSessionMatches(session)) {
+                dialog.show();
+            }
         }
+        else {
+            if (checkIfSessionMatches(initialSession)) {
+                dialog.show();
+            }
+        }
+
     }
 
     //The radius in pixels of the corners of the rectangle shape
@@ -209,12 +228,20 @@ public class AnimatedSmileyRating {
         tvSubmit.setTextSize(size);
     }
 
-    public void setSession(int session) {
-        this.session = session;
+    public void setInitialSession(int initialSession) {
+        this.initialSession = initialSession;
     }
 
     public void setThreshold(int threshold) {
         this.threshold = threshold;
+    }
+
+    public void setFeedbackEmailSubject(String feedbackEmailSubject) {
+        this.feedbackEmailSubject = feedbackEmailSubject;
+    }
+
+    public void setFeedbackPlaceholderText(String feedbackPlaceholderText) {
+        this.feedbackPlaceholderText = feedbackPlaceholderText;
     }
 
     private boolean checkIfSessionMatches(int session) {
